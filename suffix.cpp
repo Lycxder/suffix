@@ -4,34 +4,34 @@
 #define stacksize 100 
 #define queuesize 100 
  
-/*  ���е���ز���*/
+/*  队列的相关操作*/
  typedef char datatype;
  typedef struct { 
 	 char data[100];
 	 int front,rear;
- }seqqueue;        //����������� 
+ }seqqueue;        //定义队列类型 
  
-/* ����ջ  */ 
+/* 定义栈  */ 
  typedef struct
  {
 	 datatype data[100];
 	 int top;
- }seqstack;        //����ջ������ 
+ }seqstack;        //定义栈的类型 
  
-//��ʼ������
+//初始化队列
  void InitQueue(seqqueue *q) 
  {               
 	 q->front=0;            
 	 q->rear=0; 
  } 
  
-//�пն��� 
+//判空队列 
  int QueueEmpty(seqqueue  *q)  
  {              
 	 return (q->front==q->rear?1:0);
  } 
  
-//����� 
+//入队列 
  void EnQueue(seqqueue *q,datatype x) 
  {  
 	 if ((q->rear>99 ))   
@@ -42,19 +42,19 @@
 		 q->rear++; 
 	 } 
  } 
- //������
+ //出队列
  datatype DeQueue(seqqueue  *q)
  {
 	  return q->data[q->front++]; 
  } 
  
-//��ʼ��ջ
+//初始化栈
  void InitStack(seqstack *s) 
  {           
 	 s->top=0; 
  } 
  
-//��ջ
+//入栈
  void Push(seqstack *s,datatype x) 
  { 
 	 if (    s->top>=100        )     
@@ -66,13 +66,13 @@
 	 }
  } 
  
-//��ջ
+//出栈
  datatype Pop(seqstack *s) 
  {   
 	 return s->data[--s->top]; 
  } 
  
-//ȡջ��Ԫ��
+//取栈顶元素
  datatype GetTop(seqstack *s) 
  {   
 	 if (  !s->top) 
@@ -81,7 +81,7 @@
 		 return s->data[s->top-1]; 
  } 
  
-//����������ȼ����� 
+//求运算符优先级函数 
  int Priority(datatype op) 
  {    
 	 switch(op)   
@@ -99,27 +99,27 @@
 	 } 
  } 
  
-//��׺����ʽת��Ϊ��׺����ʽ
+//中缀表达式转换为后缀表达式
  void IntoPostExp(seqqueue *q) 
  { 
 	 seqstack os;   
-	 //�����ջ 
+	 //运算符栈 
 	 char c,t; 
 	 seqstack *s;     
 	 s=&os;
 	 InitStack(s);  
-	 //��ʼ��ջ 
+	 //初始化栈 
 	 Push(s,'#');   
-	 //ѹ��ջ��Ԫ��'#'
+	 //压入栈底元素'#'
 	 fflush(stdin);
-	 //ɨ����׺����ʽ  
+	 //扫描中缀表达式  
 	 do   
 	 {    
 		 c=getchar();  
 		 switch(c)  
 		 {  
 			 case ' ':   
-				 break;//ȥ���ո�  
+				 break;//去除空格  
 			 case '0':  
 			 case '1': 
 			 case '2':  
@@ -162,13 +162,13 @@ void main()
  { 
 	seqqueue *q;  
 	seqqueue postq;  
-	//������У���ź�׺����ʽ  
+	//定义队列，存放后缀表达式  
 	q=&postq;
 	InitQueue(q);
-    //��ʼ������  
+    //初始化队列  
 	IntoPostExp(q); 
-    //��׺����ʽת��Ϊ��׺����ʽ  
-	while (!QueueEmpty(q)            )  
-	//�����׺����ʽ   
+    //中缀表达式转换为后缀表达式  
+	while (!QueueEmpty(q))            )  
+	//输出后缀表达式   
 	cout<<DeQueue(q)<<"  "; 
 }
